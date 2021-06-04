@@ -38,6 +38,17 @@ const addExpense = ({
   };
 };
 //EDIT_EXPENSE
+
+const editExpense = ({ id, note = '', description = '', amount = 0 } = {}) => {
+  return {
+    type: 'EDIT_EXPENSE',
+    id,
+    note,
+    description,
+    amount
+  };
+};
+
 //REMOVE_EXPENSE
 
 const removeExpense = ({ id } = {}) => {
@@ -59,6 +70,15 @@ const expenseReducer = (state = expenseReducerStateDefault, action) => {
       return [...state, action.expense];
     case 'REMOVE_EXPENSE':
       return state.filter(({ id }) => id !== action.id);
+    case 'EDIT_EXPENSE':
+      // return state.filter(({ id }) => {
+      //   if (id === action.id) {
+      //       // note= action.note,
+      //       // description= action.description,
+      //       //  amount= action.amount,
+      //   }
+      // });
+      return {...state[id],action.note,action.description,action.amount}
     default:
       return state;
   }
@@ -98,6 +118,20 @@ const expenseTwo = store.dispatch(
     createdAt: 0
   })
 );
-store.subscribe(() => store.getState());
+
+store.subscribe(() => console.log(store.getState()));
+
 store.dispatch(removeExpense({ id: expenseOne.expense.id }));
-console.log(store.getState());
+store.dispatch(
+  editExpense({
+    id: expenseTwo.expense.id,
+    note: 'edited',
+    description: 'edited',
+    amount: 12
+  })
+);
+
+//state
+// Action Generators
+// Reducers
+//
