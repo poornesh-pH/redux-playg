@@ -44,9 +44,10 @@ const addExpense = ({
 
 const expenseReducerStateDefault = [];
 const expenseReducer = (state = expenseReducerStateDefault, action) => {
+  console.log(action);
   switch (action.type) {
     case 'ADDEXPENSE':
-      return [...state, action.expenses];
+      return [...state, action];
     default:
       return state;
   }
@@ -72,9 +73,9 @@ const store = createStore(
 
 store.dispatch(
   addExpense({
-    description: 'rent',
-    amount: 2000,
-    note: 'this is rent',
+    amount: 1000,
+    note: 'this is room rent',
+    description: 'Rent',
     createdAt: 0
   })
 );
