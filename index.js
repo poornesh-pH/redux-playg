@@ -71,14 +71,20 @@ const expenseReducer = (state = expenseReducerStateDefault, action) => {
     case 'REMOVE_EXPENSE':
       return state.filter(({ id }) => id !== action.id);
     case 'EDIT_EXPENSE':
-      return {...state[action.id],id:action.id,note:action.note,description:action.description,amount:action.amount}
+      return {
+        ...state[action.id],
+        id: action.id,
+        note: action.note,
+        description: action.description,
+        amount: action.amount
+      };
     default:
       return state;
   }
 };
 const filterReducerStateDefault = {
-  sortBy: 'amount',
-  text: 'rent',
+  sortBy: '',
+  text: '',
   startDate: undefined,
   endDate: undefined
 };
@@ -94,6 +100,7 @@ const store = createStore(
     filters: filterReducer
   })
 );
+store.subscribe(() => console.log(store.getState()));
 
 const expenseOne = store.dispatch(
   addExpense({
@@ -112,8 +119,6 @@ const expenseTwo = store.dispatch(
   })
 );
 
-store.subscribe(() => console.log(store.getState()));
-
 store.dispatch(removeExpense({ id: expenseOne.expense.id }));
 store.dispatch(
   editExpense({
@@ -123,8 +128,18 @@ store.dispatch(
     amount: 12
   })
 );
+const expenseThree = store.dispatch(
+  addExpense({
+    amount: 5000,
+    note: 'this is grocery expense',
+    description: 'Grocery',
+    createdAt: 0
+  })
+);
 
 //state
 // Action Generators
 // Reducers
-//
+//store
+
+//dispatch
