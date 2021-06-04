@@ -27,16 +27,26 @@ const addExpense = ({
   createdAt = 0
 } = {}) => {
   return {
-    type: 'ADDEXPENSE',
-    id: uuidv4(),
-    amount,
-    note,
-    description,
-    createdAt
+    type: 'ADD_EXPENSE',
+    expense: {
+      id: uuidv4(),
+      amount,
+      note,
+      description,
+      createdAt
+    }
   };
 };
 //EDIT_EXPENSE
 //REMOVE_EXPENSE
+
+const removeExpense = ({ id } = {}) => {
+  return {
+    type: 'REMOVE_EXPENSE',
+    id
+  };
+};
+
 //SET_START_DATE
 //SET_END_DATE
 //SORT_BY_DATE
@@ -45,8 +55,12 @@ const addExpense = ({
 const expenseReducerStateDefault = [];
 const expenseReducer = (state = expenseReducerStateDefault, action) => {
   switch (action.type) {
-    case 'ADDEXPENSE':
-      return [...state, action];
+    case 'ADD_EXPENSE':
+      return [...state, action.expense];
+    case 'REMOVE_EXPENSE':
+      return state.filter(({ id }) => {
+        id !== action.id;
+      });
     default:
       return state;
   }
@@ -70,7 +84,7 @@ const store = createStore(
   })
 );
 
-store.dispatch(
+const expenseOne = store.dispatch(
   addExpense({
     amount: 1000,
     note: 'this is room rent',
@@ -78,7 +92,7 @@ store.dispatch(
     createdAt: 0
   })
 );
-store.dispatch(
+const expenseTwo = store.dispatch(
   addExpense({
     amount: 1000,
     note: 'this is coffee expense',
@@ -86,4 +100,5 @@ store.dispatch(
     createdAt: 0
   })
 );
+store.dispatch(removeExpense({ id: expenseOne.expense.id }));
 console.log(store.getState());
