@@ -58,9 +58,7 @@ const expenseReducer = (state = expenseReducerStateDefault, action) => {
     case 'ADD_EXPENSE':
       return [...state, action.expense];
     case 'REMOVE_EXPENSE':
-      return state.filter(({ id }) => {
-        id !== action.id;
-      });
+      return state.filter(({ id }) => id !== action.id);
     default:
       return state;
   }
@@ -100,5 +98,6 @@ const expenseTwo = store.dispatch(
     createdAt: 0
   })
 );
+store.subscribe(() => store.getState());
 store.dispatch(removeExpense({ id: expenseOne.expense.id }));
 console.log(store.getState());
