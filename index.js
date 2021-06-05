@@ -38,19 +38,15 @@ const addExpense = ({
   };
 };
 //EDIT_EXPENSE
-
-const editExpense = ({ id, note = '', description = '', amount = 0 } = {}) => {
+const editExpense = (id, updates) => {
   return {
     type: 'EDIT_EXPENSE',
     id,
-    note,
-    description,
-    amount
+    updates
   };
 };
 
 //REMOVE_EXPENSE
-
 const removeExpense = ({ id } = {}) => {
   return {
     type: 'REMOVE_EXPENSE',
@@ -71,13 +67,16 @@ const expenseReducer = (state = expenseReducerStateDefault, action) => {
     case 'REMOVE_EXPENSE':
       return state.filter(({ id }) => id !== action.id);
     case 'EDIT_EXPENSE':
-      return {
-        ...state[action.id],
-        id: action.id,
-        note: action.note,
-        description: action.description,
-        amount: action.amount
-      };
+      return state.map(expense => {
+        if (expense.id === action.id) {
+          return {
+            ...expense,
+            ...action.updates
+          };
+        } else {
+          return expense;
+        }
+      });
     default:
       return state;
   }
@@ -119,16 +118,18 @@ const expenseTwo = store.dispatch(
   })
 );
 
-store.dispatch(removeExpense({ id: expenseOne.expense.id }));
-store.dispatch(
-  editExpense({
-    id: expenseTwo.expense.id,
+const expenseThree = store.dispatch(
+  removeExpense({ id: expenseOne.expense.id })
+);
+
+const expenseFour = store.dispatch(
+  editExpense(expenseTwo.expense.id, {
     note: 'edited',
     description: 'edited',
     amount: 12
   })
 );
-const expenseThree = store.dispatch(
+const expenseFive = store.dispatch(
   addExpense({
     amount: 5000,
     note: 'this is grocery expense',
@@ -136,6 +137,12 @@ const expenseThree = store.dispatch(
     createdAt: 0
   })
 );
+
+// console.log(expenseOne,"expense1");
+// console.log(expenseTwo,"expense2");
+// console.log(expenseThree,"expense3");
+// console.log(expenseFour,"expense4");
+// console.log(expenseFive,"expense5");
 
 //state
 // Action Generators
