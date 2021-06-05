@@ -65,6 +65,12 @@ const setTextField = ({ text = '' } = {}) => {
 //SET_END_DATE
 //SORT_BY_DATE
 //SORT_BY_AMOUNT
+const sortByValue = ({ sortBy = '' } = {}) => {
+  return {
+    type: 'SORT_BY',
+    sortBy
+  };
+};
 
 const expenseReducerStateDefault = [];
 const expenseReducer = (state = expenseReducerStateDefault, action) => {
@@ -98,6 +104,8 @@ const filterReducer = (state = filterReducerStateDefault, action) => {
   switch (action.type) {
     case 'FILTER_BY_TEXT':
       return { ...store, text: action.text };
+    case 'SORT_BY':
+      return { ...state, sortBy: action.sortBy };
     default:
       return state;
   }
@@ -146,7 +154,9 @@ const expenseFive = store.dispatch(
     createdAt: 0
   })
 );
-const searchByText = store.dispatch(setTextField({text:'rent'}));
+const searchByText = store.dispatch(setTextField({ text: 'rent' }));
+store.dispatch(sortByValue({ sortBy: 'amount' }));
+
 // console.log(expenseOne,"expense1");
 // console.log(expenseTwo,"expense2");
 // console.log(expenseThree,"expense3");
