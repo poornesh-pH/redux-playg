@@ -54,6 +54,13 @@ const removeExpense = ({ id } = {}) => {
   };
 };
 
+const setTextField = ({ text = '' } = {}) => {
+  return {
+    type: 'FILTER_BY_TEXT',
+    text
+  };
+};
+
 //SET_START_DATE
 //SET_END_DATE
 //SORT_BY_DATE
@@ -89,6 +96,8 @@ const filterReducerStateDefault = {
 };
 const filterReducer = (state = filterReducerStateDefault, action) => {
   switch (action.type) {
+    case 'FILTER_BY_TEXT':
+      return { ...store, text: action.text };
     default:
       return state;
   }
@@ -137,7 +146,7 @@ const expenseFive = store.dispatch(
     createdAt: 0
   })
 );
-
+const searchByText = store.dispatch(setTextField());
 // console.log(expenseOne,"expense1");
 // console.log(expenseTwo,"expense2");
 // console.log(expenseThree,"expense3");
