@@ -146,7 +146,7 @@ const expenseFive = store.dispatch(
     createdAt: 0
   })
 );
-const searchByText = store.dispatch(setTextField());
+const searchByText = store.dispatch(setTextField({text:'rent'}));
 // console.log(expenseOne,"expense1");
 // console.log(expenseTwo,"expense2");
 // console.log(expenseThree,"expense3");
