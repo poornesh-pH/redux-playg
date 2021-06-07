@@ -14,31 +14,28 @@ const demoState = {
   category: 'business',
   stocked: true
 };
-
-const productsDefaultvalue = {
-  id: null,
-  name : '',
-  description : '',
-  price: null,
-  author:'',
-  type:'',
-  img:'',
-  inCart:''
-}
-
-const productsReducer = (state = {}, action) => {
-
-};
-const filterReducer = (state = {}, action) => {};
 // PRODUCTS
 //ADD_PRODUCT
 //REMOVE_PRODUCT
 //EDIT_PRODUCT
+const productsDefaultvalue = []
+
+const productsReducer = (state = productsDefaultvalue, action) => {
+
+};
 
 //FILTERS & SORTING
 //SORT_BY_PRICE
 //SORT_BY_AVAILABLITY
 //FILTER_BY_TEXT
+filterDefaultValue = {
+  text: '',
+  price: null,
+  stocked: null
+}
+const filterReducer = (state = filterDefaultValue, action) => {};
+
+
 
 const store = createStore(
   combineReducers(() => {
