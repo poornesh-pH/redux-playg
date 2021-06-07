@@ -17,13 +17,13 @@ const demoState = {
 // PRODUCTS
 //ADD_PRODUCT
 const addProduct = ({
-  id,
-  name,
-  description,
-  price,
-  author,
-  type,
-  img
+  id = '',
+  name = '',
+  description = '',
+  price = '',
+  author = '',
+  type = '',
+  img = ''
 } = {}) => {
   return {
     type: 'ADD_PRODUCT',
@@ -45,7 +45,9 @@ const productsDefaultvalue = [];
 const productsReducer = (state = productsDefaultvalue, action) => {
   switch (action.type) {
     case 'ADD_PRODUCT':
-      return [...state, action.product];
+      return [...state, action.product]
+      default :
+      return state
   }
 };
 
@@ -61,20 +63,22 @@ const filterDefaultValue = {
 const filterReducer = (state = filterDefaultValue, action) => {
   switch (action.type) {
     case 'SORT_BY_PRICE':
-      return state;
+      return state
+      default: 
+      return state
   }
 };
 
 const store = createStore(
-  combineReducers(() => {
-    products: productsReducer;
-    filters: filterReducer;
+  combineReducers({
+    products: productsReducer,
+    filters: filterReducer
   })
 );
+
 store.subscribe(() => {
   console.log(store.getState());
 });
-
 const product1 = store.dispatch(
   addProduct({
     id: 1,
@@ -91,4 +95,6 @@ const product1 = store.dispatch(
     stocked: true
   })
 );
-console.log(product1);
+
+
+
