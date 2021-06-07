@@ -15,7 +15,20 @@ const demoState = {
   stocked: true
 };
 
-const productsReducer = (state = {}, action) => {};
+const productsDefaultvalue = {
+  id: null,
+  name : '',
+  description : '',
+  price: null,
+  author:'',
+  type:'',
+  img:'',
+  inCart:''
+}
+
+const productsReducer = (state = {}, action) => {
+
+};
 const filterReducer = (state = {}, action) => {};
 // PRODUCTS
 //ADD_PRODUCT
