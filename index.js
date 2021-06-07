@@ -1,5 +1,5 @@
 import { createStore, combineReducers } from 'redux';
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 const demoState = {
   id: 1,
   name: 'The Power of HABIT',
@@ -28,7 +28,7 @@ const addProduct = ({
   return {
     type: 'ADD_PRODUCT',
     product: {
-      id : uuidv4(),
+      id: uuidv4(),
       name,
       description,
       price,
@@ -39,15 +39,24 @@ const addProduct = ({
   };
 };
 //REMOVE_PRODUCT
+const removeProduct = ( id ) => {
+  console.log(id)
+  return {
+    type: 'REMOVE_PRODUCT',
+    id
+  };
+};
 //EDIT_PRODUCT
 const productsDefaultvalue = [];
 
 const productsReducer = (state = productsDefaultvalue, action) => {
   switch (action.type) {
     case 'ADD_PRODUCT':
-      return [...state, action.product]
-      default :
-      return state
+      return [...state, action.product];
+    case 'REMOVE_PRODUCT':
+      return state.filter(product => product.id !== action.id);
+    default:
+      return state;
   }
 };
 
@@ -63,9 +72,9 @@ const filterDefaultValue = {
 const filterReducer = (state = filterDefaultValue, action) => {
   switch (action.type) {
     case 'SORT_BY_PRICE':
-      return state
-      default: 
-      return state
+      return state;
+    default:
+      return state;
   }
 };
 
@@ -96,5 +105,4 @@ const product1 = store.dispatch(
   })
 );
 
-
-
+const removeProduct1 = store.dispatch(removeProduct({id:product1.id }));
