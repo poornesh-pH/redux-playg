@@ -16,7 +16,7 @@ const demoState = {
 };
 
 const productsReducer = (state = {}, action) => {};
-
+const filterReducer = (state = {}, action) => {};
 // PRODUCTS
 //ADD_PRODUCT
 //REMOVE_PRODUCT
@@ -27,5 +27,10 @@ const productsReducer = (state = {}, action) => {};
 //SORT_BY_AVAILABLITY
 //FILTER_BY_TEXT
 
-const store = createStore(productsReducer);
+const store = createStore(
+  combineReducers(() => {
+    products: productsReducer;
+    filters: filterReducer;
+  })
+);
 // console.log(store.getState());
