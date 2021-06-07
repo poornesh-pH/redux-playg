@@ -1,5 +1,5 @@
 import { createStore, combineReducers } from 'redux';
-
+import {v4 as uuidv4} from 'uuid';
 const demoState = {
   id: 1,
   name: 'The Power of HABIT',
@@ -17,7 +17,7 @@ const demoState = {
 // PRODUCTS
 //ADD_PRODUCT
 const addProduct = ({
-  id = '',
+  id,
   name = '',
   description = '',
   price = '',
@@ -28,7 +28,7 @@ const addProduct = ({
   return {
     type: 'ADD_PRODUCT',
     product: {
-      id,
+      id : uuidv4(),
       name,
       description,
       price,
