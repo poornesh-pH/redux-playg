@@ -21,6 +21,7 @@ const demoState = {
 const productsDefaultvalue = []
 
 const productsReducer = (state = productsDefaultvalue, action) => {
+  switch(action.type)
 
 };
 
@@ -28,7 +29,7 @@ const productsReducer = (state = productsDefaultvalue, action) => {
 //SORT_BY_PRICE
 //SORT_BY_AVAILABLITY
 //FILTER_BY_TEXT
-filterDefaultValue = {
+const filterDefaultValue = {
   text: '',
   price: null,
   stocked: null
