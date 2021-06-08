@@ -39,14 +39,14 @@ const addProduct = ({
   };
 };
 //REMOVE_PRODUCT
-const removeProduct = ( id ) => {
-  console.log(id)
+const removeProduct = (id = '') => {
   return {
     type: 'REMOVE_PRODUCT',
     id
   };
 };
 //EDIT_PRODUCT
+
 const productsDefaultvalue = [];
 
 const productsReducer = (state = productsDefaultvalue, action) => {
@@ -90,7 +90,6 @@ store.subscribe(() => {
 });
 const product1 = store.dispatch(
   addProduct({
-    id: 1,
     name: 'The Power of HABIT',
     description:
       'The Power of HABIT: Why We Do What We Do in Life and Business. A young woman walks into a laboratory. Over the past two years, she has transformed almost every aspect of her life. She has quit smoking, run a marathon, and been promoted at work. The patterns inside her brain, neurologists discover, have fundamentally changed.',
@@ -104,5 +103,20 @@ const product1 = store.dispatch(
     stocked: true
   })
 );
+const removeProduct1 = store.dispatch(removeProduct(product1.product.id));
 
-const removeProduct1 = store.dispatch(removeProduct({id:product1.id }));
+const product2 = store.dispatch(
+  addProduct({
+    name: 'True Fiction (Ian Ludlow Thrillers)',
+    description:
+      'A breakneck thriller where truth and fiction collide for the unluckiest writer alive.',
+    price: 4.99,
+    author: 'Lee Goldberg',
+    type: 'kindle',
+    img:
+      'https://images-na.ssl-images-amazon.com/images/I/51UbplnqSgL._SX331_BO1,204,203,200_.jpg',
+    inCart: false,
+    category: 'mystery',
+    stocked: false
+  })
+);
