@@ -14,7 +14,7 @@ const demoState = {
   category: 'business',
   stocked: true
 };
-// PRODUCTS
+// ----------PRODUCTS-----------
 //ADD_PRODUCT
 const addProduct = ({
   id,
@@ -75,10 +75,18 @@ const productsReducer = (state = productsDefaultvalue, action) => {
   }
 };
 
-//FILTERS & SORTING
+//-----------FILTERS & SORTING-----------
 //SORT_BY_PRICE
 //SORT_BY_AVAILABLITY
 //FILTER_BY_TEXT
+const filterBytext = (text,{}={}) =>{
+return{
+  type: 'FILTER_BY_TEXT',
+
+}
+}
+
+
 const filterDefaultValue = {
   text: '',
   price: null,
@@ -115,7 +123,7 @@ const product1 = store.dispatch(
       'https://images-na.ssl-images-amazon.com/images/I/51ejXdSceNL._AA300_.jpg',
     inCart: false,
     category: 'business',
-    stocked: true
+    stocked: 15
   })
 );
 const removeProduct1 = store.dispatch(removeProduct(product1.product.id));
@@ -132,7 +140,7 @@ const product2 = store.dispatch(
       'https://images-na.ssl-images-amazon.com/images/I/51UbplnqSgL._SX331_BO1,204,203,200_.jpg',
     inCart: false,
     category: 'mystery',
-    stocked: false
+    stocked: 13
   })
 );
 
@@ -143,3 +151,5 @@ const editProduct2 = store.dispatch(
     type: 'paperback'
   })
 );
+
+const filterByAuthor = store.dispatch(filterBytext(text="abc",store.products)) 
