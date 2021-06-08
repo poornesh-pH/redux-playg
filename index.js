@@ -47,19 +47,12 @@ const removeProduct = (id = '') => {
 };
 //EDIT_PRODUCT
 
-const editProduct = ({id,name,description,price,author,type,img}) =>{
-  return{  
-  type: "EDIT_PRODUCT",
-  product: {id,
-  author,
-  description,
-  name,
-  price,
-  type,
-  img
-  }
-  }
-}
+const editProduct = ({ id, name, description, price, author, type, img }) => {
+  return {
+    type: 'EDIT_PRODUCT',
+    product: { id, author, description, name, price, type, img }
+  };
+};
 
 const productsDefaultvalue = [];
 
@@ -69,14 +62,14 @@ const productsReducer = (state = productsDefaultvalue, action) => {
       return [...state, action.product];
     case 'REMOVE_PRODUCT':
       return state.filter(product => product.id !== action.id);
-      case 'EDIT_PRODUCT':
-      return state.map((product)=>{
-        if(product.id === action.product.id){
-          return{
-          ...action.product
-          }
+    case 'EDIT_PRODUCT':
+      return state.map(product => {
+        if (product.id === action.product.id) {
+          return {
+            ...action.product
+          };
         }
-      })
+      });
     default:
       return state;
   }
@@ -143,7 +136,10 @@ const product2 = store.dispatch(
   })
 );
 
-const editProduct2 = store.dispatch(editProduct({
-  id: product2.product.id,
-  author:"Poornesh",type:"paperback"
-}))
+const editProduct2 = store.dispatch(
+  editProduct({
+    id: product2.product.id,
+    author: 'Poornesh',
+    type: 'paperback'
+  })
+);
