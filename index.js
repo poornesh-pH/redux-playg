@@ -79,13 +79,13 @@ const productsReducer = (state = productsDefaultvalue, action) => {
 //SORT_BY_PRICE
 //SORT_BY_AVAILABLITY
 //FILTER_BY_TEXT
-const filterBytext = (text,{}={}) =>{
-return{
-  type: 'FILTER_BY_TEXT',
-
-}
-}
-
+const filterBytext = (text = '', products = {}) => {
+  return {
+    type: 'FILTER_BY_TEXT',
+    products,
+    text
+  };
+};
 
 const filterDefaultValue = {
   text: '',
@@ -152,4 +152,4 @@ const editProduct2 = store.dispatch(
   })
 );
 
-const filterByAuthor = store.dispatch(filterBytext(text="abc",store.products)) 
+const filterByAuthor = store.dispatch(filterBytext('abc', store.products));
