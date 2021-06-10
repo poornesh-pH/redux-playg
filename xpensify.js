@@ -160,8 +160,8 @@ const store = createStore(
 );
 store.subscribe(() => {
   const state = store.getState();
-  const vidibleExpeses = getVisibleExpenses(state.expenses, state.filters);
-  console.log(vidibleExpeses);
+  const visibleExpeses = getVisibleExpenses(state.expenses, state.filters);
+  console.log(visibleExpeses);
 });
 
 const expenseOne = store.dispatch(

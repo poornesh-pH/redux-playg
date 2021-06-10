@@ -85,7 +85,7 @@ const filterBytext = (sortByText = '') => {
     sortByText
   };
 };
-const sortByPrice = (sortByP = 'low') => {
+const sortByPrice = (sortByP) => {
   return {
     type: 'SORT_BY_PRICE',
     sortByP
@@ -99,7 +99,7 @@ const sortByAvailablity = (sortByA = false) => {
 };
 const filterDefaultValue = {
   sortByText: '',
-  sortByP: undefined,
+  sortByP: 'low',
   sortByA: undefined
 };
 const filterReducer = (state = filterDefaultValue, action) => {
@@ -115,15 +115,24 @@ const filterReducer = (state = filterDefaultValue, action) => {
   }
 };
 
+const getVisibleProducts =(products,{sortByText,sortByA,sortByP})=>{
+  return products.filter((product)
+  =>((product.name.toLowerCase()).includes(sortByText)||
+  (product.author.toLowerCase()).includes(sortByText)))
+}
+
 const store = createStore(
   combineReducers({
     products: productsReducer,
-    filters: filterReducer
+    filters: filterReducer, 
   })
 );
 
 store.subscribe(() => {
-  console.log(store.getState());
+ const state = store.getState();
+ const visibleProducts = getVisibleProducts(state.products,state.filters);
+ console.log(visibleProducts)
+
 });
 const product1 = store.dispatch(
   addProduct({
@@ -173,4 +182,4 @@ const editProduct2 = store.dispatch(
   })
 );
 
-const filterByAuthor = store.dispatch(filterBytext('abc'));
+const filterByAuthor = store.dispatch(filterBytext('fic'));
