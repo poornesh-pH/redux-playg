@@ -68,7 +68,7 @@ const productsReducer = (state = productsDefaultvalue, action) => {
           return {
             ...action.product
           };
-        }
+        } else return product;
       });
     default:
       return state;
@@ -79,22 +79,36 @@ const productsReducer = (state = productsDefaultvalue, action) => {
 //SORT_BY_PRICE
 //SORT_BY_AVAILABLITY
 //FILTER_BY_TEXT
-const filterBytext = (text = '', products = {}) => {
+const filterBytext = (sortByText = '') => {
   return {
     type: 'FILTER_BY_TEXT',
-    products,
-    text
+    sortByText
   };
 };
-
+const sortByPrice = (sortByP = 'low') => {
+  return {
+    type: 'SORT_BY_PRICE',
+    sortByP
+  };
+};
+const sortByAvailablity = (sortByA = false) => {
+  return {
+    type: 'SORT_BY_AVAILABLITY',
+    sortByA
+  };
+};
 const filterDefaultValue = {
-  text: '',
-  price: null,
-  stocked: null
+  sortByText: '',
+  sortByP: undefined,
+  sortByA: undefined
 };
 const filterReducer = (state = filterDefaultValue, action) => {
   switch (action.type) {
     case 'SORT_BY_PRICE':
+      return state;
+    case 'FILTER_BY_TEXT':
+      return state;
+    case 'FILTER_BY_AVAILABILITY':
       return state;
     default:
       return state;
@@ -126,7 +140,7 @@ const product1 = store.dispatch(
     stocked: 15
   })
 );
-const removeProduct1 = store.dispatch(removeProduct(product1.product.id));
+// const removeProduct1 = store.dispatch(removeProduct(product1.product.id));
 
 const product2 = store.dispatch(
   addProduct({
@@ -148,8 +162,17 @@ const editProduct2 = store.dispatch(
   editProduct({
     id: product2.product.id,
     author: 'Poornesh',
-    type: 'paperback'
+    type: 'paperback',
+    description: product2.product.description,
+    price: product2.product.price,
+    inCart: product2.product.inCart,
+    category: product2.product.category,
+    stocked: 1000,
+    img: product2.product.img,
+    name: product2.product.name
   })
 );
 
-const filterByAuthor = store.dispatch(filterBytext('abc', store.products));
+// const filterByAuthor = store.dispatch(
+//   filterBytext('abc')
+// );
