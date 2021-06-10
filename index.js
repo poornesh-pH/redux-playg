@@ -105,11 +105,11 @@ const filterDefaultValue = {
 const filterReducer = (state = filterDefaultValue, action) => {
   switch (action.type) {
     case 'SORT_BY_PRICE':
-      return state;
+      return { ...state, sortByP: action.sortByP };
     case 'FILTER_BY_TEXT':
-      return state;
+      return { ...state, sortByText: action.sortByText };
     case 'FILTER_BY_AVAILABILITY':
-      return state;
+      return { ...state, sortByA: action.sortByA };
     default:
       return state;
   }
@@ -173,6 +173,4 @@ const editProduct2 = store.dispatch(
   })
 );
 
-// const filterByAuthor = store.dispatch(
-//   filterBytext('abc')
-// );
+const filterByAuthor = store.dispatch(filterBytext('abc'));
