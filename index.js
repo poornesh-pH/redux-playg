@@ -91,14 +91,14 @@ const sortByPrice = (sortByP) => {
     sortByP
   };
 };
-const sortByAvailablity = (sortByA = false) => {
+const filterByAvailablity = (sortByA) => {
   return {
-    type: 'SORT_BY_AVAILABLITY',
+    type: 'FILTER_BY_AVAILABLITY',
     sortByA
   };
 };
 const filterDefaultValue = {
-  sortByText: '',
+  sortByText: undefined,
   sortByP: 'low',
   sortByA: undefined
 };
@@ -108,7 +108,7 @@ const filterReducer = (state = filterDefaultValue, action) => {
       return { ...state, sortByP: action.sortByP };
     case 'FILTER_BY_TEXT':
       return { ...state, sortByText: action.sortByText };
-    case 'FILTER_BY_AVAILABILITY':
+    case 'FILTER_BY_AVAILABLITY':
       return { ...state, sortByA: action.sortByA };
     default:
       return state;
@@ -117,8 +117,13 @@ const filterReducer = (state = filterDefaultValue, action) => {
 
 const getVisibleProducts =(products,{sortByText,sortByA,sortByP})=>{
   return products.filter((product)
-  =>((product.name.toLowerCase()).includes(sortByText)||
-  (product.author.toLowerCase()).includes(sortByText)))
+  =>{
+    const TextMatch = ((product.name.toLowerCase()).includes(sortByText)||
+  (product.author.toLowerCase()).includes(sortByText));
+    const AvailablitySort = sortByA && product.stocked > 0 ;
+    return TextMatch || AvailablitySort
+  }
+  )
 }
 
 const store = createStore(
@@ -146,7 +151,7 @@ const product1 = store.dispatch(
       'https://images-na.ssl-images-amazon.com/images/I/51ejXdSceNL._AA300_.jpg',
     inCart: false,
     category: 'business',
-    stocked: 15
+    stocked: 0
   })
 );
 // const removeProduct1 = store.dispatch(removeProduct(product1.product.id));
@@ -182,4 +187,5 @@ const editProduct2 = store.dispatch(
   })
 );
 
-const filterByAuthor = store.dispatch(filterBytext('fic'));
+const filterByAuthor = store.dispatch(filterBytext(''));
+const sortByAvail = store.dispatch(filterByAvailablity(true))
