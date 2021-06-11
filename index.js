@@ -116,14 +116,10 @@ const filterReducer = (state = filterDefaultValue, action) => {
 };
 
 const getVisibleProducts =(products,{sortByText,sortByA,sortByP})=>{
-  return products.filter((product)
-  =>{
-    const TextMatch = ((product.name.toLowerCase()).includes(sortByText)||
-  (product.author.toLowerCase()).includes(sortByText));
-    const AvailablitySort = sortByA && product.stocked > 0 ;
-    return TextMatch || AvailablitySort
-  }
-  )
+  if(sortByA){
+    return products.filter(product=>{
+product.stocked > 0
+    } )}
 }
 
 const store = createStore(
@@ -187,5 +183,6 @@ const editProduct2 = store.dispatch(
   })
 );
 
-const filterByAuthor = store.dispatch(filterBytext(''));
+// const filterByAuthor = store.dispatch(filterBytext(''));
 const sortByAvail = store.dispatch(filterByAvailablity(true))
+// const sortPhigh = store.dispatch(sortByPrice('low'))
