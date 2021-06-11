@@ -85,13 +85,13 @@ const filterBytext = (sortByText = '') => {
     sortByText
   };
 };
-const sortByPrice = (sortByP) => {
+const sortByPrice = sortByP => {
   return {
     type: 'SORT_BY_PRICE',
     sortByP
   };
 };
-const filterByAvailablity = (sortByA) => {
+const filterByAvailablity = sortByA => {
   return {
     type: 'FILTER_BY_AVAILABLITY',
     sortByA
@@ -115,25 +115,23 @@ const filterReducer = (state = filterDefaultValue, action) => {
   }
 };
 
-const getVisibleProducts =(products,{sortByText,sortByA,sortByP})=>{
-  if(sortByA){
-    return products.filter(product=>{
-product.stocked > 0
-    } )}
-}
+const getVisibleProducts = (products, { sortByText, sortByA, sortByP }) => {
+  if (sortByA) {
+    return products;
+  }
+};
 
 const store = createStore(
   combineReducers({
     products: productsReducer,
-    filters: filterReducer, 
+    filters: filterReducer
   })
 );
 
 store.subscribe(() => {
- const state = store.getState();
- const visibleProducts = getVisibleProducts(state.products,state.filters);
- console.log(visibleProducts)
-
+  const state = store.getState();
+  const visibleProducts = getVisibleProducts(state.products, state.filters);
+  console.log(visibleProducts);
 });
 const product1 = store.dispatch(
   addProduct({
@@ -184,5 +182,5 @@ const editProduct2 = store.dispatch(
 );
 
 // const filterByAuthor = store.dispatch(filterBytext(''));
-const sortByAvail = store.dispatch(filterByAvailablity(true))
+const sortByAvail = store.dispatch(filterByAvailablity(true));
 // const sortPhigh = store.dispatch(sortByPrice('low'))
