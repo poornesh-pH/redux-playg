@@ -123,7 +123,7 @@ const filterByAvailablity = sortByA => {
 };
 const filterDefaultValue = {
   sortByText: '',
-  sortByP: 'low',
+  sortByP: 'low-high',
   sortByA: undefined
 };
 const filterReducer = (state = filterDefaultValue, action) => {
@@ -150,8 +150,13 @@ const getVisibleProducts = (products, { sortByText, sortByA, sortByP }) => {
     if (sortByA) return textFiltered.filter(product => product.stocked > 0);
     else return textFiltered;
   };
-  return availFiltered();
+  const priceFiltered = availFiltered().sort((a, b) => {
+    if (sortByP === 'low-high') return a.price < b.price ? -1 : 1;
+    else if (sortByP === 'high-low') return a.price > b.price ? -1 : 1;
+  });
+  return priceFiltered;
 };
+
 const store = createStore(
   combineReducers({
     products: productsReducer,
@@ -212,6 +217,6 @@ const editProduct2 = store.dispatch(
   })
 );
 
-const filterByAuthor = store.dispatch(filterBytext('habit'));
+const filterByAuthor = store.dispatch(filterBytext('poornesh'));
 const sortByAvail = store.dispatch(filterByAvailablity(false));
-// const sortPhigh = store.dispatch(sortByPrice('low'))
+const sortPhigh = store.dispatch(sortByPrice('high-low'));
