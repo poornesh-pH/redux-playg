@@ -23,7 +23,9 @@ const addProduct = ({
   price = '',
   author = '',
   type = '',
-  img = ''
+  img = '',
+  stocked = null,
+  category = ''
 } = {}) => {
   return {
     type: 'ADD_PRODUCT',
@@ -34,7 +36,9 @@ const addProduct = ({
       price,
       author,
       type,
-      img
+      img,
+      stocked,
+      category
     }
   };
 };
@@ -47,10 +51,30 @@ const removeProduct = (id = '') => {
 };
 //EDIT_PRODUCT
 
-const editProduct = ({ id, name, description, price, author, type, img }) => {
+const editProduct = ({
+  id,
+  name,
+  description,
+  price,
+  author,
+  type,
+  img,
+  stocked,
+  category
+}) => {
   return {
     type: 'EDIT_PRODUCT',
-    product: { id, author, description, name, price, type, img }
+    product: {
+      id,
+      author,
+      description,
+      name,
+      price,
+      type,
+      img,
+      stocked,
+      category
+    }
   };
 };
 
@@ -98,7 +122,7 @@ const filterByAvailablity = sortByA => {
   };
 };
 const filterDefaultValue = {
-  sortByText: undefined,
+  sortByText: '',
   sortByP: 'low',
   sortByA: undefined
 };
@@ -116,11 +140,18 @@ const filterReducer = (state = filterDefaultValue, action) => {
 };
 
 const getVisibleProducts = (products, { sortByText, sortByA, sortByP }) => {
-  if (sortByA) {
-    return products;
-  }
-};
+  const textFiltered = products.filter(
+    product =>
+      product.name.toLowerCase().includes(sortByText.toLowerCase()) ||
+      product.author.toLowerCase().includes(sortByText.toLowerCase())
+  );
 
+  const availFiltered = () => {
+    if (sortByA) return textFiltered.filter(product => product.stocked > 0);
+    else return textFiltered;
+  };
+  return availFiltered();
+};
 const store = createStore(
   combineReducers({
     products: productsReducer,
@@ -170,17 +201,17 @@ const editProduct2 = store.dispatch(
   editProduct({
     id: product2.product.id,
     author: 'Poornesh',
-    type: 'paperback',
-    description: product2.product.description,
-    price: product2.product.price,
-    inCart: product2.product.inCart,
     category: product2.product.category,
-    stocked: 1000,
+    description: product2.product.description,
     img: product2.product.img,
-    name: product2.product.name
+    inCart: product2.product.inCart,
+    name: product2.product.name,
+    price: product2.product.price,
+    type: 'paperback',
+    stocked: 10
   })
 );
 
-// const filterByAuthor = store.dispatch(filterBytext(''));
-const sortByAvail = store.dispatch(filterByAvailablity(true));
+const filterByAuthor = store.dispatch(filterBytext('habit'));
+const sortByAvail = store.dispatch(filterByAvailablity(false));
 // const sortPhigh = store.dispatch(sortByPrice('low'))
